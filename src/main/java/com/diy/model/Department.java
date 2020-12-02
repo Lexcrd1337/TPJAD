@@ -1,4 +1,4 @@
-package model;
+package com.diy.model;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "name")
@@ -16,6 +16,8 @@ public class Department {
 
     @OneToMany(mappedBy = "department")
     private List<Employee> employees;
+
+    public Department() {}
 
     public Department(String name, List<Employee> employees) {
         this.name = name;

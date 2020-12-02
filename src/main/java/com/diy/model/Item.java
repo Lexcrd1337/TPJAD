@@ -1,4 +1,4 @@
-package model;
+package com.diy.model;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "name")
@@ -25,6 +25,8 @@ public class Item {
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "items")
     private List<Order> orders;
+
+    public Item() {}
 
     public Item(String name, double price, int quantity, String brand, List<Order> orders) {
         this.name = name;

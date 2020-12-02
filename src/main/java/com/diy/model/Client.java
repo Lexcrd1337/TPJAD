@@ -1,4 +1,4 @@
-package model;
+package com.diy.model;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "name")
@@ -19,6 +19,8 @@ public class Client {
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
+
+    public Client() {}
 
     public Client(String name, String billingAddress, List<Order> orders) {
         this.name = name;

@@ -1,15 +1,15 @@
-package model;
+package com.diy.model;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "shipping_address")
@@ -25,9 +25,13 @@ public class Order {
     @ManyToMany
     @JoinTable(
             name = "order_details",
-            joinColumns = { @JoinColumn(name = "order_id") },
-            inverseJoinColumns = { @JoinColumn(name = "item_id") })
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"),
+            foreignKey = @ForeignKey(name = "order_details_fk_order"),
+            inverseForeignKey = @ForeignKey(name = "order_details_fk_item"))
     private List<Item> items;
+
+    public Order() {}
 
     public Order(String shippingAddress, Date date, Client client, List<Item> items) {
         this.shippingAddress = shippingAddress;

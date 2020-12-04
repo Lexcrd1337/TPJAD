@@ -1,0 +1,14 @@
+{
+  "extends": ["airbnb-typescript-prettier"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.{ts,tsx}"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}

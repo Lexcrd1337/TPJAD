@@ -1,0 +1,14 @@
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+
+# NPM Modules
+node_modules/
+
+# Dotenv Environment Variables File
+.env

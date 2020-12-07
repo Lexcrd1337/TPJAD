@@ -1,5 +1,7 @@
 package com.diy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,12 +22,18 @@ public class User {
     private String username;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "role")
     private String role;
 
     public User() {}
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public User(String name, String email, String username, String password, String role) {
         this.name = name;

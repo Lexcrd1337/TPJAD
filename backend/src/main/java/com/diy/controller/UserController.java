@@ -1,8 +1,6 @@
 package com.diy.controller;
 
-import com.diy.model.Client;
 import com.diy.model.User;
-import com.diy.repository.ClientRepository;
 import com.diy.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

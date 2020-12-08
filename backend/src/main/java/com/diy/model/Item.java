@@ -23,16 +23,20 @@ public class Item {
     @Column(name = "brand")
     private String brand;
 
+    @Column(name = "image")
+    private String image;
+
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "items")
     private List<Order> orders;
 
     public Item() {}
 
-    public Item(String name, double price, int quantity, String brand, List<Order> orders) {
+    public Item(String name, double price, int quantity, String brand, String image, List<Order> orders) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.brand = brand;
+        this.image = image;
         this.orders = orders;
     }
 
@@ -74,6 +78,14 @@ public class Item {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public List<Order> getOrders() {

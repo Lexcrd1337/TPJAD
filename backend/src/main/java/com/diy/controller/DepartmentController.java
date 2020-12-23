@@ -3,6 +3,7 @@ package com.diy.controller;
 import com.diy.model.Department;
 import com.diy.repository.DepartmentRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DepartmentController {
     private static final Logger LOGGER = Logger.getLogger(DepartmentController.class.getName());
 

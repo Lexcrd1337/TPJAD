@@ -17,11 +17,15 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private List<Employee> employees;
 
+    @OneToMany(mappedBy = "department")
+    private List<Item> items;
+
     public Department() {}
 
-    public Department(String name, List<Employee> employees) {
+    public Department(String name, List<Employee> employees, List<Item> items) {
         this.name = name;
         this.employees = employees;
+        this.items = items;
     }
 
     public long getId() {
@@ -46,5 +50,13 @@ public class Department {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

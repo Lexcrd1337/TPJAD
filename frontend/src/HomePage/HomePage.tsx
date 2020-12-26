@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Redirect } from 'react-router';
 import { userService, authenticationService } from '../services';
-import User from '../types';
+import { User } from '../types';
 
 interface StateTypes {
   currentUser: User;
@@ -26,9 +25,6 @@ class HomePage extends React.Component<{}, StateTypes> {
 
   render() {
     const { currentUser, users } = this.state;
-    if (!currentUser) {
-      return <Redirect to="/" />;
-    }
 
     return (
       <div>

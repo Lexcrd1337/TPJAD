@@ -26,17 +26,22 @@ public class Item {
     @Column(name = "image")
     private String image;
 
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "items")
     private List<Order> orders;
 
     public Item() {}
 
-    public Item(String name, double price, int quantity, String brand, String image, List<Order> orders) {
+    public Item(String name, double price, int quantity, String brand, String image, Department department, List<Order> orders) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.brand = brand;
         this.image = image;
+        this.department = department;
         this.orders = orders;
     }
 

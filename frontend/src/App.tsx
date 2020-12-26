@@ -1,15 +1,16 @@
 import React from 'react';
-import { Router, Route, Link } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 
-import { authenticationService } from './services';
-import { PrivateRoute } from './components';
+import { authenticationService, departmentService } from './services';
+import { PrivateRoute, NavbarWrapper } from './components';
 import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage';
 import { history } from './helpers';
-import User from './types';
+import { User, Department } from './types';
 
 interface StateTypes {
   currentUser: User | null;
+  departments: Department[];
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -17,13 +18,19 @@ class App extends React.Component<{}, StateTypes> {
   constructor(props: never) {
     super(props);
 
-    this.state = { currentUser: null };
+    this.state = {
+      currentUser: null,
+      departments: [] as Department[],
+    };
   }
 
   componentDidMount() {
     authenticationService.currentUser.subscribe((user: User) =>
       this.setState({ currentUser: user }),
     );
+    departmentService.getAll().then((fetchedDepartments: Department[]) => {
+      this.setState({ departments: fetchedDepartments });
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -33,23 +40,17 @@ class App extends React.Component<{}, StateTypes> {
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, departments } = this.state;
 
     return (
       <Router history={history}>
         <div>
           {currentUser && (
-            <nav className="navbar navbar-expand navbar-dark bg-dark">
-              <div className="navbar-nav">
-                <Link to="/" className="nav-item nav-link">
-                  Home
-                </Link>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                <a onClick={this.logout} className="nav-item nav-link">
-                  Logout
-                </a>
-              </div>
-            </nav>
+            <NavbarWrapper
+              currentUser={currentUser}
+              departments={departments}
+              logoutFunction={this.logout}
+            />
           )}
           <div className="jumbotron">
             <div className="container">

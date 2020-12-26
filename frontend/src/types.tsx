@@ -1,7 +1,10 @@
-interface User {
+export interface User {
   id: number;
   username: string;
   password: string;
 }
 
-export default User;
+export interface Department {
+  id: number;
+  name: string;
+}

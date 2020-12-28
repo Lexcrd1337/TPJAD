@@ -1,9 +1,9 @@
-/* eslint-disable react/destructuring-assignment */
 import React, { ReactElement } from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { NavDropdownMenu } from 'react-bootstrap-submenu';
 import { PersonCircle } from 'react-bootstrap-icons';
-import { Department, User } from '../types';
+import { User } from '../services/user.service';
+import { Department } from '../services/department.service';
 
 interface PropTypes {
   currentUser: User | null;
@@ -22,6 +22,8 @@ function populateDepartmentsDropdown(departments: Department[]) {
 }
 
 function NavbarWrapper(props: PropTypes): ReactElement {
+  const { departments, logoutFunction, currentUser } = props;
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Navbar.Brand href="/">DIY Store</Navbar.Brand>
@@ -29,13 +31,13 @@ function NavbarWrapper(props: PropTypes): ReactElement {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <NavDropdownMenu title="Departments" id="collasible-nav-dropdown">
-            {populateDepartmentsDropdown(props.departments)}
+            {populateDepartmentsDropdown(departments)}
           </NavDropdownMenu>
         </Nav>
-        <Nav onSelect={props.logoutFunction}>
+        <Nav onSelect={logoutFunction}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <PersonCircle color="#FFF" size={24} style={{ marginRight: '8px' }} />
-            <Navbar.Text>{props.currentUser?.username}</Navbar.Text>
+            <Navbar.Text>{currentUser?.username}</Navbar.Text>
           </div>
           <Nav.Link eventKey="logout">Logout</Nav.Link>
         </Nav>
@@ -44,5 +46,4 @@ function NavbarWrapper(props: PropTypes): ReactElement {
   );
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { NavbarWrapper };
+export default NavbarWrapper;

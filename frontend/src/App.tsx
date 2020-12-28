@@ -3,18 +3,23 @@ import { Router, Route } from 'react-router-dom';
 
 import { authenticationService, departmentService } from './services';
 import { PrivateRoute, NavbarWrapper } from './components';
-import { HomePage } from './HomePage';
-import { LoginPage } from './LoginPage';
-import { history } from './helpers';
-import { User, Department } from './types';
+import HomePage from './HomePage';
+import LoginPage from './LoginPage';
+import history from './helpers';
+import { User } from './services/user.service';
+import { Department } from './services/department.service';
 
 interface StateTypes {
   currentUser: User | null;
   departments: Department[];
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 class App extends React.Component<{}, StateTypes> {
+  static logout(): void {
+    authenticationService.logout();
+    history.push('/login');
+  }
+
   constructor(props: never) {
     super(props);
 
@@ -24,22 +29,16 @@ class App extends React.Component<{}, StateTypes> {
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     authenticationService.currentUser.subscribe((user: User) =>
       this.setState({ currentUser: user }),
     );
-    departmentService.getAll().then((fetchedDepartments: Department[]) => {
+    departmentService.getAll().then((fetchedDepartments) => {
       this.setState({ departments: fetchedDepartments });
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  logout() {
-    authenticationService.logout();
-    history.push('/login');
-  }
-
-  render() {
+  render(): JSX.Element {
     const { currentUser, departments } = this.state;
 
     return (
@@ -49,7 +48,7 @@ class App extends React.Component<{}, StateTypes> {
             <NavbarWrapper
               currentUser={currentUser}
               departments={departments}
-              logoutFunction={this.logout}
+              logoutFunction={App.logout}
             />
           )}
           <div className="jumbotron">

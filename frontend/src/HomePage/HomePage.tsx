@@ -1,14 +1,13 @@
 import React from 'react';
 
 import { userService, authenticationService } from '../services';
-import { User } from '../types';
+import { User } from '../services/user.service';
 
 interface StateTypes {
   currentUser: User;
   users: User[] | null;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 class HomePage extends React.Component<{}, StateTypes> {
   constructor(props: never) {
     super(props);
@@ -19,11 +18,11 @@ class HomePage extends React.Component<{}, StateTypes> {
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     userService.getAll().then((users) => this.setState({ users }));
   }
 
-  render() {
+  render(): JSX.Element {
     const { currentUser, users } = this.state;
 
     return (
@@ -43,5 +42,4 @@ class HomePage extends React.Component<{}, StateTypes> {
   }
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { HomePage };
+export default HomePage;

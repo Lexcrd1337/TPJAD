@@ -12,3 +12,8 @@ node_modules/
 
 # Dotenv Environment Variables File
 .env
+
+# Intellij
+.idea
+target
+*.iml

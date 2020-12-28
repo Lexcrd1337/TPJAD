@@ -14,8 +14,8 @@ interface LocationState {
 function LoginPage(props: RouteComponentProps<never, StaticContext, LocationState>): ReactElement {
   // redirect to home if already logged in
   if (authenticationService.currentUserValue) {
-    // eslint-disable-next-line react/destructuring-assignment
-    props.history.push('/');
+    const { history } = props;
+    history.push('/');
   }
 
   return (
@@ -49,7 +49,6 @@ function LoginPage(props: RouteComponentProps<never, StaticContext, LocationStat
         render={({ errors, status, touched, isSubmitting }) => (
           <Form>
             <div className="form-group">
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="username">Username</label>
               <Field
                 name="username"
@@ -61,7 +60,6 @@ function LoginPage(props: RouteComponentProps<never, StaticContext, LocationStat
               <ErrorMessage name="username" component="div" className="invalid-feedback" />
             </div>
             <div className="form-group">
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="password">Password</label>
               <Field
                 name="password"
@@ -85,5 +83,4 @@ function LoginPage(props: RouteComponentProps<never, StaticContext, LocationStat
   );
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { LoginPage };
+export default LoginPage;

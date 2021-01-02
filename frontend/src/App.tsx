@@ -8,6 +8,7 @@ import LoginPage from './LoginPage';
 import history from './helpers';
 import { User } from './services/user.service';
 import { Department } from './services/department.service';
+import ItemsPage from './ItemsPage';
 
 interface StateTypes {
   currentUser: User | null;
@@ -57,6 +58,7 @@ class App extends React.Component<{}, StateTypes> {
                 <div className="col-md-6 offset-md-3">
                   <PrivateRoute exact path="/" component={HomePage} />
                   <Route path="/login" component={LoginPage} />
+                  <Route path="/departments/:name" component={ItemsPage} />
                 </div>
               </div>
             </div>

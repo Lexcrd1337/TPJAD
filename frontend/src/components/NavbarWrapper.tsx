@@ -14,7 +14,7 @@ interface PropTypes {
 function populateDepartmentsDropdown(departments: Department[]) {
   return departments.map((department) => {
     return (
-      <NavDropdown.Item key={department.id} href={`/department/${department.name}`}>
+      <NavDropdown.Item key={department.id} href={`/departments/${department.name}`}>
         {department.name}
       </NavDropdown.Item>
     );
@@ -32,6 +32,8 @@ function NavbarWrapper(props: PropTypes): ReactElement {
         <Nav className="mr-auto">
           <NavDropdownMenu title="Departments" id="collasible-nav-dropdown">
             {populateDepartmentsDropdown(departments)}
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="/departments/All">All</NavDropdown.Item>
           </NavDropdownMenu>
         </Nav>
         <Nav onSelect={logoutFunction}>

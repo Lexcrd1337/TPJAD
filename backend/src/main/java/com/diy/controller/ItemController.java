@@ -3,10 +3,7 @@ package com.diy.controller;
 import com.diy.model.Item;
 import com.diy.repository.ItemRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +28,14 @@ public class ItemController {
 
         List<Item> items = new ArrayList<>();
         itemRepository.findAll().forEach(items::add);
+
+        return ResponseEntity.ok(items);
+    }
+
+    @GetMapping("/items/{departmentName}")
+    public ResponseEntity<List<Item>> getItemsByDepartment(@PathVariable String departmentName) {
+        LOGGER.log(Level.INFO, "REST request to get all items for department {0}", departmentName);
+        List<Item> items = new ArrayList<>(itemRepository.findAllByDepartmentNameIgnoreCase(departmentName));
 
         return ResponseEntity.ok(items);
     }

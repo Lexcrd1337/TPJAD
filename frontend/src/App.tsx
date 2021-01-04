@@ -9,6 +9,7 @@ import history from './helpers';
 import { User } from './services/user.service';
 import { Department } from './services/department.service';
 import ItemsPage from './ItemsPage';
+import ItemPage from './ItemPage';
 
 interface StateTypes {
   currentUser: User | null;
@@ -59,6 +60,7 @@ class App extends React.Component<{}, StateTypes> {
                   <PrivateRoute exact path="/" component={HomePage} />
                   <Route path="/login" component={LoginPage} />
                   <Route path="/departments/:name" component={ItemsPage} />
+                  <Route path="/items/:name" component={ItemPage} />
                 </div>
               </div>
             </div>

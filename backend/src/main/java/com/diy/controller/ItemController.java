@@ -32,11 +32,19 @@ public class ItemController {
         return ResponseEntity.ok(items);
     }
 
-    @GetMapping("/items/{departmentName}")
+    @GetMapping("/itemsByDepartment/{departmentName}")
     public ResponseEntity<List<Item>> getItemsByDepartment(@PathVariable String departmentName) {
         LOGGER.log(Level.INFO, "REST request to get all items for department {0}", departmentName);
         List<Item> items = new ArrayList<>(itemRepository.findAllByDepartmentNameIgnoreCase(departmentName));
 
         return ResponseEntity.ok(items);
+    }
+
+    @GetMapping("/itemByName/{itemName}")
+    public ResponseEntity<Item> getItemByName(@PathVariable String itemName) {
+        LOGGER.log(Level.INFO, "REST request to get item by name {0}", itemName);
+        Item item = itemRepository.findByNameIgnoreCase(itemName);
+
+        return ResponseEntity.ok(item);
     }
 }

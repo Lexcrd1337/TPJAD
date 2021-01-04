@@ -41,7 +41,7 @@ class ItemsPage extends React.Component<{}, StateTypes> {
               </Card.Text>
             </Card.Body>
             <Card.Body>
-              <Card.Link href="#">Buy</Card.Link>
+              <Card.Link href={`/items/${item.name}`}>Buy</Card.Link>
             </Card.Body>
           </Card>
         );

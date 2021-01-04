@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Long> {
+    Item findByNameIgnoreCase(String name);
     List<Item> findAllByDepartmentNameIgnoreCase(String department);
 }

@@ -1,13 +1,17 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { Cart, DashCircleFill, PlusCircleFill } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
+import { Cart as CartIcon, DashCircleFill, PlusCircleFill } from 'react-bootstrap-icons';
 import { Item, itemService } from '../services/item.service';
+import { User, userService } from '../services/user.service';
+import { authenticationService } from '../services';
 
 interface StateTypes {
   itemName: string;
   item: Item | null;
   quantity: number;
   price: number;
+  currentUser: User | null;
 }
 
 class ItemPage extends React.Component<{}, StateTypes> {
@@ -19,6 +23,7 @@ class ItemPage extends React.Component<{}, StateTypes> {
       item: null,
       quantity: 0,
       price: 0,
+      currentUser: null,
     };
   }
 
@@ -26,6 +31,9 @@ class ItemPage extends React.Component<{}, StateTypes> {
     const { itemName } = this.state;
 
     itemService.getByName(itemName).then((item) => this.setState({ item }));
+    authenticationService.currentUser.subscribe((user: User) =>
+      this.setState({ currentUser: user }),
+    );
   }
 
   increaseQuantity = (): void => {
@@ -46,6 +54,20 @@ class ItemPage extends React.Component<{}, StateTypes> {
       price = item?.price ? item.price * quantity : price;
 
       this.setState({ quantity, price });
+    }
+  };
+
+  addToCartItem = (): void => {
+    const { item, currentUser, quantity, price } = this.state;
+    if (item && currentUser) {
+      const newItem = item;
+      if (quantity > 0) {
+        newItem.quantity = quantity;
+        newItem.price = price;
+        console.log(newItem);
+      }
+      userService.addToCart(currentUser?.username, newItem);
+      console.log(newItem);
     }
   };
 
@@ -75,9 +97,11 @@ class ItemPage extends React.Component<{}, StateTypes> {
           </div>
           <h5>Price: {price}</h5>
         </Card.Body>
-        <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
-          <h4>Add to cart!</h4>
-          <Cart size={24} style={{ marginLeft: 'auto' }} />
+        <Card.Body>
+          <Link onClick={this.addToCartItem} style={{ display: 'flex' }} to="/cart">
+            <Card.Text>Add To Cart</Card.Text>
+            <CartIcon size={24} style={{ marginLeft: 'auto' }} />
+          </Link>
         </Card.Body>
       </Card>
     );

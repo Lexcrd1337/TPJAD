@@ -3,6 +3,7 @@ package com.diy.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +28,10 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    @Column(name = "cart")
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Item> cart;
 
     public User() {}
 
@@ -89,5 +94,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Item> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<Item> cart) {
+        this.cart = cart;
     }
 }

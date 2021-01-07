@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { NavDropdownMenu } from 'react-bootstrap-submenu';
-import { PersonCircle } from 'react-bootstrap-icons';
+import { PersonCircle, Cart as CartIcon } from 'react-bootstrap-icons';
 import { User } from '../services/user.service';
 import { Department } from '../services/department.service';
 
@@ -38,6 +39,9 @@ function NavbarWrapper(props: PropTypes): ReactElement {
         </Nav>
         <Nav onSelect={logoutFunction}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Link to="/cart">
+              <CartIcon color="#FFF" size={24} style={{ marginRight: '8px' }} />
+            </Link>
             <PersonCircle color="#FFF" size={24} style={{ marginRight: '8px' }} />
             <Navbar.Text>{currentUser?.username}</Navbar.Text>
           </div>

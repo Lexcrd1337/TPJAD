@@ -10,6 +10,7 @@ import { User } from './services/user.service';
 import { Department } from './services/department.service';
 import ItemsPage from './ItemsPage';
 import ItemPage from './ItemPage';
+import Cart from './Cart';
 
 interface StateTypes {
   currentUser: User | null;
@@ -20,6 +21,7 @@ class App extends React.Component<{}, StateTypes> {
   static logout(): void {
     authenticationService.logout();
     history.push('/login');
+    window.location.reload(false);
   }
 
   constructor(props: never) {
@@ -59,8 +61,9 @@ class App extends React.Component<{}, StateTypes> {
                 <div className="col-md-6 offset-md-3">
                   <PrivateRoute exact path="/" component={HomePage} />
                   <Route path="/login" component={LoginPage} />
-                  <Route path="/departments/:name" component={ItemsPage} />
-                  <Route path="/items/:name" component={ItemPage} />
+                  <PrivateRoute path="/departments/:name" component={ItemsPage} />
+                  <PrivateRoute path="/items/:name" component={ItemPage} />
+                  <PrivateRoute path="/cart" component={Cart} />
                 </div>
               </div>
             </div>

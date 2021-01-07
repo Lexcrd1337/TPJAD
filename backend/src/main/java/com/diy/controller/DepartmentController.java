@@ -3,13 +3,12 @@ package com.diy.controller;
 import com.diy.model.Department;
 import com.diy.repository.DepartmentRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,5 +32,20 @@ public class DepartmentController {
         departmentRepository.findAll().forEach(departments::add);
 
         return ResponseEntity.ok(departments);
+    }
+
+    @PostMapping({"/createDepartment"})
+    public ResponseEntity<Department> createItem(@RequestBody Department department) {
+        LOGGER.log(Level.INFO, "Creating department");
+        this.departmentRepository.save(department);
+        return ResponseEntity.ok(department);
+    }
+
+    @DeleteMapping({"/deleteDepartment"})
+    public ResponseEntity<Department> deleteItem(@RequestParam Long id) {
+        LOGGER.log(Level.INFO, "Deleting department: " + id);
+        Optional<Department> itemOptional = this.departmentRepository.findById(id);
+        itemOptional.ifPresent(departmentRepository::delete);
+        return ResponseEntity.ok((Department)itemOptional.get());
     }
 }

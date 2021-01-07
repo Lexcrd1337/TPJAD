@@ -3,13 +3,12 @@ package com.diy.controller;
 import com.diy.model.Employee;
 import com.diy.repository.EmployeeRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,5 +32,20 @@ public class EmployeeController {
         employeeRepository.findAll().forEach(employees::add);
 
         return ResponseEntity.ok(employees);
+    }
+
+    @PostMapping({"/createEmployee"})
+    public ResponseEntity<Employee> createItem(@RequestBody Employee employee) {
+        LOGGER.log(Level.INFO, "Creating employee");
+        this.employeeRepository.save(employee);
+        return ResponseEntity.ok(employee);
+    }
+
+    @DeleteMapping({"/deleteEmployee"})
+    public ResponseEntity<Employee> deleteItem(@RequestParam Long id) {
+        LOGGER.log(Level.INFO, "Deleting employee: " + id);
+        Optional<Employee> itemOptional = this.employeeRepository.findById(id);
+        itemOptional.ifPresent(employeeRepository::delete);
+        return ResponseEntity.ok((Employee)itemOptional.get());
     }
 }

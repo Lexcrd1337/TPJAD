@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +32,21 @@ public class ItemController {
         itemRepository.findAll().forEach(items::add);
 
         return ResponseEntity.ok(items);
+    }
+
+    @PostMapping("/createItem")
+    public ResponseEntity<Item> createItem(@RequestBody Item item) {
+        LOGGER.log(Level.INFO, "Creating item");
+        this.itemRepository.save(item);
+        return ResponseEntity.ok(item);
+    }
+
+    @DeleteMapping({"/deleteItem"})
+    public ResponseEntity<Item> deleteItem(@RequestParam Long id) {
+        LOGGER.log(Level.INFO, "Deleting item: " + id);
+        Optional<Item> itemOptional = this.itemRepository.findById(id);
+        itemOptional.ifPresent(itemRepository::delete);
+        return ResponseEntity.ok((Item)itemOptional.get());
     }
 
     @GetMapping("/itemsByDepartment/{departmentName}")

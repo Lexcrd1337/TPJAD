@@ -11,6 +11,15 @@ export interface Item {
   department?: Department;
 }
 
+export interface ItemCreateDTO {
+  name?: string;
+  price?: number;
+  quantity?: number;
+  brand?: string;
+  image?: string;
+  departmentId?: number;
+}
+
 function authHeader() {
   // return authorization header with jwt token
   const currentUser = authenticationService.currentUserValue;
@@ -90,8 +99,24 @@ async function getByName(itemName: string): Promise<Item> {
   return response.json();
 }
 
+async function createItem(item: ItemCreateDTO): Promise<Item> {
+  const requestOptions = { method: 'POST', headers: authHeader(), body: JSON.stringify(item) };
+  const response = await fetch('http://localhost:8080/api/createItem', requestOptions);
+
+  if (!response.ok) {
+    const text = await response.text();
+    const data = JSON.parse(text);
+    const error = (data && data.message) || response.statusText;
+
+    return Promise.reject(error);
+  }
+
+  return response.json();
+}
+
 export const itemService = {
   getAll,
   getAllByDepartmentName,
   getByName,
+  createItem,
 };

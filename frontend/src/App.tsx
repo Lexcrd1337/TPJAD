@@ -12,6 +12,7 @@ import ItemsPage from './ItemsPage';
 import ItemPage from './ItemPage';
 import Cart from './Cart';
 import CreateDepartmentPage from './CreateDepartmentPage';
+import CreateItemPage from './CreateItemPage';
 
 interface StateTypes {
   currentUser: User | null;
@@ -46,7 +47,10 @@ class App extends React.Component<{}, StateTypes> {
   render(): JSX.Element {
     const { currentUser, departments } = this.state;
 
-    const isAdmin = currentUser?.role === 'admin';
+    // TODO: currentUser does not contain the role field
+    // after we fix this on the backend, we can set isAdmin
+    // depnding on the role
+    const isAdmin = true;
 
     return (
       <Router history={history}>
@@ -68,7 +72,10 @@ class App extends React.Component<{}, StateTypes> {
                   <PrivateRoute path="/items/:name" component={ItemPage} />
                   <PrivateRoute path="/cart" component={Cart} />
                   {isAdmin && (
-                    <PrivateRoute path="/createDepartment" component={CreateDepartmentPage} />
+                    <>
+                      <PrivateRoute path="/createDepartment" component={CreateDepartmentPage} />
+                      <PrivateRoute path="/createItem" component={CreateItemPage} />
+                    </>
                   )}
                 </div>
               </div>

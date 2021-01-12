@@ -35,17 +35,17 @@ public class DepartmentController {
     }
 
     @PostMapping({"/createDepartment"})
-    public ResponseEntity<Department> createItem(@RequestBody Department department) {
+    public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
         LOGGER.log(Level.INFO, "Creating department");
         this.departmentRepository.save(department);
         return ResponseEntity.ok(department);
     }
 
     @DeleteMapping({"/deleteDepartment"})
-    public ResponseEntity<Department> deleteItem(@RequestParam Long id) {
+    public ResponseEntity<Department> deleteDepartment(@RequestParam Long id) {
         LOGGER.log(Level.INFO, "Deleting department: " + id);
-        Optional<Department> itemOptional = this.departmentRepository.findById(id);
-        itemOptional.ifPresent(departmentRepository::delete);
-        return ResponseEntity.ok((Department)itemOptional.get());
+        Optional<Department> departmentOptional = this.departmentRepository.findById(id);
+        departmentOptional.ifPresent(departmentRepository::delete);
+        return ResponseEntity.ok((Department)departmentOptional.get());
     }
 }

@@ -11,6 +11,7 @@ import { Department } from './services/department.service';
 import ItemsPage from './ItemsPage';
 import ItemPage from './ItemPage';
 import Cart from './Cart';
+import CreateDepartmentPage from './CreateDepartmentPage';
 
 interface StateTypes {
   currentUser: User | null;
@@ -45,6 +46,8 @@ class App extends React.Component<{}, StateTypes> {
   render(): JSX.Element {
     const { currentUser, departments } = this.state;
 
+    const isAdmin = currentUser?.role === 'admin';
+
     return (
       <Router history={history}>
         <div>
@@ -64,6 +67,9 @@ class App extends React.Component<{}, StateTypes> {
                   <PrivateRoute path="/departments/:name" component={ItemsPage} />
                   <PrivateRoute path="/items/:name" component={ItemPage} />
                   <PrivateRoute path="/cart" component={Cart} />
+                  {isAdmin && (
+                    <PrivateRoute path="/createDepartment" component={CreateDepartmentPage} />
+                  )}
                 </div>
               </div>
             </div>

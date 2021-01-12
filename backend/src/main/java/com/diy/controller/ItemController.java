@@ -1,5 +1,6 @@
 package com.diy.controller;
 
+import com.diy.dto.ItemDTO;
 import com.diy.model.Item;
 import com.diy.repository.ItemRepository;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +36,11 @@ public class ItemController {
     }
 
     @PostMapping("/createItem")
-    public ResponseEntity<Item> createItem(@RequestBody Item item) {
+    public ResponseEntity<Item> createItem(@RequestBody ItemDTO item) {
         LOGGER.log(Level.INFO, "Creating item");
-        this.itemRepository.save(item);
-        return ResponseEntity.ok(item);
+
+        //this.itemRepository.save(item);
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping({"/deleteItem"})

@@ -46,7 +46,7 @@ async function getAll(): Promise<User[]> {
 async function addToCart(username: string, item: Item): Promise<User[]> {
   const requestOptions = { method: 'POST', headers: authHeader(), body: JSON.stringify(item) };
   const response = await fetch(`http://localhost:8080/api/addToCart/${username}`, requestOptions);
-  console.log(item);
+
   if (!response.ok) {
     if ([401, 403].indexOf(response.status) !== -1) {
       // auto logout if 401 Unauthorized or 403 Forbidden response returned from api

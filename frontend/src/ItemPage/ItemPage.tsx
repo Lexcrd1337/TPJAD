@@ -64,10 +64,8 @@ class ItemPage extends React.Component<{}, StateTypes> {
       if (quantity > 0) {
         newItem.quantity = quantity;
         newItem.price = price;
-        console.log(newItem);
       }
       userService.addToCart(currentUser?.username, newItem);
-      console.log(newItem);
     }
   };
 

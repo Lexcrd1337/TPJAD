@@ -3,10 +3,12 @@ package com.diy.dto;
 public class AuthDTO {
     private String username;
     private String password;
+    private String role;
     private String jwtToken;
 
-    public AuthDTO(String username, String jwtToken) {
+    public AuthDTO(String username, String role, String jwtToken) {
         this.username = username;
+        this.role = role;
         this.jwtToken = jwtToken;
     }
 
@@ -24,6 +26,14 @@ public class AuthDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getJwtToken() {

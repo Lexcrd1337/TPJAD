@@ -24,6 +24,7 @@ function populateDepartmentsDropdown(departments: Department[]) {
 
 function NavbarWrapper(props: PropTypes): ReactElement {
   const { departments, logoutFunction, currentUser } = props;
+  const isAdmin = currentUser?.role === 'admin';
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -36,11 +37,17 @@ function NavbarWrapper(props: PropTypes): ReactElement {
             <NavDropdown.Divider />
             <NavDropdown.Item href="/departments/All">All</NavDropdown.Item>
           </NavDropdownMenu>
+          {isAdmin && (
+            <NavDropdownMenu title="Manage" id="collasible-nav-dropdown">
+              <NavDropdown.Item href="/createDepartment">Add Department</NavDropdown.Item>
+              <NavDropdown.Item href="/createItem">Add Item</NavDropdown.Item>
+            </NavDropdownMenu>
+          )}
         </Nav>
         <Nav onSelect={logoutFunction}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Link to="/cart">
-              <CartIcon color="#FFF" size={24} style={{ marginRight: '8px' }} />
+              <CartIcon color="#FFF" size={24} style={{ margin: '0 8px 2px 0' }} />
             </Link>
             <PersonCircle color="#FFF" size={24} style={{ marginRight: '8px' }} />
             <Navbar.Text>{currentUser?.username}</Navbar.Text>

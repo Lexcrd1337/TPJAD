@@ -65,14 +65,12 @@ class Cart extends React.Component<{}, StateTypes> {
   };
 
   render(): JSX.Element {
-    const {
-      items,
-      currentUser: { username },
-    } = this.state;
+    const { items } = this.state;
+
     if (items.length) {
       return (
         <div>
-          <h1>Your Cart: {username}</h1>
+          <h1>Your Cart</h1>
           {this.displayItems(items)}
         </div>
       );

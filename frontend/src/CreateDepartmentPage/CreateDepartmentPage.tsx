@@ -34,7 +34,7 @@ class CreateDepartmentPage extends React.Component<{}, StateTypes> {
         .then(() => {
           this.setState({
             alertVariant: AlertVariant.SUCCESS,
-            alertMessage: 'Department created succesfully.',
+            alertMessage: 'Department created successfully.',
             department: undefined,
           });
         })

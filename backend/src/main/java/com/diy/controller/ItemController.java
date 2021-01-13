@@ -1,15 +1,14 @@
 package com.diy.controller;
 
 import com.diy.dto.ItemDTO;
+import com.diy.model.Department;
 import com.diy.model.Item;
+import com.diy.repository.DepartmentRepository;
 import com.diy.repository.ItemRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,9 +19,12 @@ public class ItemController {
     private static final Logger LOGGER = Logger.getLogger(ItemController.class.getName());
 
     private final ItemRepository itemRepository;
+    
+    private final DepartmentRepository departmentRepository;
 
-    public ItemController(ItemRepository itemRepository) {
+    public ItemController(ItemRepository itemRepository, DepartmentRepository departmentRepository) {
         this.itemRepository = itemRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     @GetMapping("/items")
@@ -36,11 +38,14 @@ public class ItemController {
     }
 
     @PostMapping("/createItem")
-    public ResponseEntity<Item> createItem(@RequestBody ItemDTO item) {
-        LOGGER.log(Level.INFO, "Creating item");
+    public ResponseEntity<Item> createItem(@RequestBody ItemDTO itemDTO) {
+        LOGGER.log(Level.INFO, "Creating item {0}", itemDTO);
+        Department department = departmentRepository.findById((long) itemDTO.getDepartmentId()).orElse(null);
+        Item item = new Item(itemDTO.getName(), itemDTO.getPrice(), itemDTO.getQuantity(), itemDTO.getBrand(),
+                itemDTO.getImage(), department, Collections.emptyList());
+        itemRepository.save(item);
 
-        //this.itemRepository.save(item);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(item);
     }
 
     @DeleteMapping({"/deleteItem"})

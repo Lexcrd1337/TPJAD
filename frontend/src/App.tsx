@@ -46,11 +46,7 @@ class App extends React.Component<{}, StateTypes> {
 
   render(): JSX.Element {
     const { currentUser, departments } = this.state;
-
-    // TODO: currentUser does not contain the role field
-    // after we fix this on the backend, we can set isAdmin
-    // depnding on the role
-    const isAdmin = true;
+    const isAdmin = currentUser?.role === 'admin';
 
     return (
       <Router history={history}>

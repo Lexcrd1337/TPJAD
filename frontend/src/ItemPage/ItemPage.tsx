@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Cart as CartIcon, DashCircleFill, PlusCircleFill } from 'react-bootstrap-icons';
+import { Cart as CartIcon } from 'react-bootstrap-icons';
 import { Item, itemService } from '../services/item.service';
 import { User, userService } from '../services/user.service';
 import { authenticationService } from '../services';
@@ -70,7 +70,7 @@ class ItemPage extends React.Component<{}, StateTypes> {
   };
 
   render(): JSX.Element {
-    const { item, quantity, price } = this.state;
+    const { item } = this.state;
 
     return (
       <Card style={{ width: '18rem', marginTop: '10px' }} key={item?.id}>
@@ -80,20 +80,6 @@ class ItemPage extends React.Component<{}, StateTypes> {
           <Card.Text>
             {item?.name} from {item?.brand}. {item?.price} RON
           </Card.Text>
-        </Card.Body>
-        <Card.Body>
-          <div style={{ display: 'flex', alignItems: 'end' }}>
-            <h5>Quantity: {quantity}</h5>
-            <div style={{ marginLeft: 'auto' }}>
-              <DashCircleFill
-                size={20}
-                onClick={this.decreaseQuantity}
-                style={{ marginRight: '8px' }}
-              />
-              <PlusCircleFill size={20} onClick={this.increaseQuantity} />
-            </div>
-          </div>
-          <h5>Price: {price}</h5>
         </Card.Body>
         <Card.Body>
           <Link onClick={this.addToCartItem} style={{ display: 'flex' }} to="/cart">
